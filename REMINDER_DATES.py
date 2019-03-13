@@ -1,34 +1,47 @@
 def CREATE_MESSAGE(dates, separator=None):
 
-	# inject dates into example sentence
-	message = 'Мы оповестим вас о предстоящих событиях за {} и {}'.format(str(dates[0:-1])[1:-1], str(dates[-1]))
+	# create pieces of final message
+	message1 = 'Мы оповестим вас о предстоящих событиях за '
+	message2 = ''
+	message3 = ''
+
+	#fill message2 with days in readable format
+	if len(dates) == 0:
+		raise Exception('Отсутствуют даты')
+	elif len(dates) == 1:
+		message2 = str(dates)[1:-1]
+	else:
+		message2 = str(dates[:-1])[1:-1] + ' и ' + str(dates[-1])
 
 	# replace comma with an selected separator
 	if separator:
-		message = message.replace(',', separator)
+		message2 = message2.replace(',', separator)
 
 	# choose correct case for ending word
-	if message.endswith('1'):
-		message += ' день'
-	elif message.endswith(('2', '3', '4')):
-		message += ' дня'
-	elif message.endswith(('5', '6', '7', '8', '9', '0')):
-		message += ' дней'
+	if message2.endswith('1'):
+		message3 = ' день'
+	elif message2.endswith(('2', '3', '4')):
+		message3 = ' дня'
+	elif message2.endswith(('5', '6', '7', '8', '9', '0')):
+		message3 = ' дней'
 
-	return message
+	return message1 + message2 + message3
 
 if __name__ == '__main__':
 
 	print("Examples:")
 
-	REMINDER_DATES = (5, 3, 2, 1, 0,)
+	REMINDER_DATES = '5, 3, 2, 1'
 	print(CREATE_MESSAGE(REMINDER_DATES))
 
+	REMINDER_DATES = (5, 3, 2, 1, 0,)
+	print(CREATE_MESSAGE(REMINDER_DATES, '/'))
+
 	REMINDER_DATES = (10, 5, 3, 4,)
-	print(CREATE_MESSAGE(REMINDER_DATES, ';'))
+	print(CREATE_MESSAGE(REMINDER_DATES, separator=';'))
 
 	REMINDER_DATES = (10, 5, 3, 2, 1, 8)
-	print(CREATE_MESSAGE(REMINDER_DATES, separator='/'))
+	print(CREATE_MESSAGE(REMINDER_DATES))
 
 	REMINDER_DATES = (10, 5, 3, 2, 1, 10)
-	print(CREATE_MESSAGE(REMINDER_DATES, ' и'))
+	print(CREATE_MESSAGE(REMINDER_DATES))
