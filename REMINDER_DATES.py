@@ -1,4 +1,4 @@
-def CREATE_MESSAGE(dates, separator=None):
+def create_message(dates, separator=None):
 
 	# create pieces of final message
 	message1 = 'Мы оповестим вас о предстоящих событиях за '
@@ -32,16 +32,16 @@ if __name__ == '__main__':
 	print("Examples:")
 
 	REMINDER_DATES = '5, 3, 2, 1'
-	print(CREATE_MESSAGE(REMINDER_DATES))
+	print(create_message(REMINDER_DATES))
 
 	REMINDER_DATES = (5, 3, 2, 1, 0,)
-	print(CREATE_MESSAGE(REMINDER_DATES, '/'))
+	print(create_message(REMINDER_DATES, '/'))
 
 	REMINDER_DATES = (10, 5, 3, 4,)
-	print(CREATE_MESSAGE(REMINDER_DATES, separator=';'))
+	print(create_message(REMINDER_DATES, separator=';'))
 
 	REMINDER_DATES = (10, 5, 3, 2, 1, 8)
-	print(CREATE_MESSAGE(REMINDER_DATES))
+	print(create_message(REMINDER_DATES))
 
 	REMINDER_DATES = (10, 5, 3, 2, 1, 10)
-	print(CREATE_MESSAGE(REMINDER_DATES))
+	print(create_message(REMINDER_DATES))
