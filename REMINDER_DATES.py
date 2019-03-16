@@ -10,19 +10,53 @@ For example:
 
 def create_message(dates, separator=', '):
 	'''
-	This function construct message from dates:
+	This function construct a message from a tuple with dates:
 
 	>>>create_message((2, 4, 5, 7))
 	'Мы оповестим вас о предстоящих событиях за 2, 4, 5 и 7 дней'
 
-	You can even use a tuple with only date. Conjunction "и" ("and") will not be inputed then
+	You can even use a tuple with only date. Conjunction "и" ("and") will not be inputed then:
 
 	>>>create_message((7,))
 	'Мы оповестим вас о предстоящих событиях за 7 дней'
 
-	Also strings and lists is supported:
-	>>>create_message((7,))
-	'Мы оповестим вас о предстоящих событиях за 7 дней'
+	Also strings and lists are supported:
+
+	>>>create_message('5, 7, 2, 8, ')
+	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
+	>>>create_message([5, 7, 2, 8])
+	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
+
+	Commas are not required with strings:
+	>>>create_message('5 7 2 8')
+	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
+
+	But beware using create_message with empty input:
+
+	>>>create_message(())
+	Traceback (most recent call last):
+  		File "reminder_dates.py", line 73, in <module>
+    		print(create_message(r))
+		File "reminder_dates.py", line 36, in create_message
+    		raise Exception('Отсутствуют даты')
+	Exception: Отсутствуют даты
+
+	Don't input a letters neither:
+
+	>>>create_message((3, 5, 6, 3, 'a'))
+	Traceback (most recent call last):
+	  File "reminder_dates.py", line 55, in create_message
+	    integers.append(int(c))
+	ValueError: invalid literal for int() with base 10: 'a'
+
+	During handling of the above exception, another exception occurred:
+
+	Traceback (most recent call last):
+	  File "reminder_dates.py", line 81, in <module>
+	    print(create_message(r))
+	  File "reminder_dates.py", line 57, in create_message
+	    raise Exception('Вместо даты использована буква')
+	Exception: Вместо даты использована буква
 	'''
 
 	#check input argument
@@ -63,7 +97,7 @@ def create_message(dates, separator=', '):
 	return message
 
 if __name__ == '__main__':
-	r = (1,)
+	r = ('3 5 3 7 4')
 	print(create_message(r))
 	#
 	# import doctest
