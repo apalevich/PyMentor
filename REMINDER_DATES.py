@@ -4,7 +4,7 @@ The exercise contains function called create_message() that returns a message ab
 
 For example:
 >>> create_message((2, 4, 6, 7,))
-'Мы оповестим вам о предстоящих событиях за 2, 4, 6 и 7 дней'
+'Мы оповестим вас о предстоящих событиях за 2, 4, 6 и 7 дней'
 
 """
 
@@ -12,28 +12,28 @@ def create_message(dates, separator=', '):
 	'''
 	This function construct a message from a tuple with dates:
 
-	>>>create_message((2, 4, 5, 7))
+	>>> create_message((2, 4, 5, 7))
 	'Мы оповестим вас о предстоящих событиях за 2, 4, 5 и 7 дней'
 
 	You can even use a tuple with only date. Conjunction "и" ("and") will not be inputed then:
 
-	>>>create_message((7,))
+	>>> create_message((7,))
 	'Мы оповестим вас о предстоящих событиях за 7 дней'
 
 	Also strings and lists are supported:
 
-	>>>create_message('5, 7, 2, 8, ')
+	>>> create_message('5, 7, 2, 8, ')
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
-	>>>create_message([5, 7, 2, 8])
+	>>> create_message([5, 7, 2, 8])
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
 
 	Commas are not required with strings:
-	>>>create_message('5 7 2 8')
+	>>> create_message('5 7 2 8')
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
 
 	But beware using create_message with empty input:
 
-	>>>create_message(())
+	>>> create_message(())
 	Traceback (most recent call last):
   		File "reminder_dates.py", line 73, in <module>
     		print(create_message(r))
@@ -43,18 +43,11 @@ def create_message(dates, separator=', '):
 
 	Don't input a letters neither:
 
-	>>>create_message((3, 5, 6, 3, 'a'))
+	>>> create_message((3, 5, 6, 3, 'a', ))
 	Traceback (most recent call last):
-	  File "reminder_dates.py", line 55, in create_message
-	    integers.append(int(c))
-	ValueError: invalid literal for int() with base 10: 'a'
-
-	During handling of the above exception, another exception occurred:
-
-	Traceback (most recent call last):
-	  File "reminder_dates.py", line 81, in <module>
+	  File "reminder_dates.py", line 101, in <module>
 	    print(create_message(r))
-	  File "reminder_dates.py", line 57, in create_message
+	  File "reminder_dates.py", line 77, in create_message
 	    raise Exception('Вместо даты использована буква')
 	Exception: Вместо даты использована буква
 	'''
@@ -78,18 +71,18 @@ def create_message(dates, separator=', '):
 
 	message = ''
 	# choose correct case for ending word
-	if str(dates).endswith('1', 0, -1):
+	if str(integers[-1]).endswith('1'):
 		message = ' день'
-	elif str(dates).endswith(('2', '3', '4'), 0, -1):
+	elif str(integers[-1]).endswith(('2', '3', '4')):
 		message = ' дня'
-	elif str(dates).endswith(('5', '6', '7', '8', '9', '0'), 0, -1):
+	elif str(integers[-1]).endswith(('5', '6', '7', '8', '9', '0')):
 		message = ' дней'
 
 	# construct final message
-	if len(dates) > 1:
-		message = 'Мы оповестим вас о предстоящих событиях за {} и {}'.format(str(dates[:-1])[1:-1], str(dates[-1])) + message
+	if len(integers) > 1:
+		message = 'Мы оповестим вас о предстоящих событиях за {} и {}'.format(str(integers[0:-1])[1:-1], str(integers[-1])) + message
 	else:
-		message = 'Мы оповестим вас о предстоящих событиях за {}'.format(str(dates)[1:-1]) + message
+		message = 'Мы оповестим вас о предстоящих событиях за {}'.format(str(integers)[1:-1]) + message
 
 	# replace comma with an selected separator
 	message = message.replace(', ', separator)
@@ -97,8 +90,8 @@ def create_message(dates, separator=', '):
 	return message
 
 if __name__ == '__main__':
-	r = ('3 5 3 7 4')
-	print(create_message(r))
+	# r = (3, 5, 6, 3, 'a', )
+	# print(create_message(r))
 	#
-	# import doctest
-	# doctest.testmod()
+	import doctest
+	doctest.testmod()
