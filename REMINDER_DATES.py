@@ -8,7 +8,7 @@ For example:
 
 """
 
-def create_message(dates, separator=', '):
+def create_message(dates, separator=None):
 	'''
 	This function construct a message from a tuple with dates:
 
@@ -28,8 +28,13 @@ def create_message(dates, separator=', '):
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
 
 	Commas are not required with strings:
+
 	>>> create_message('5 7 2 8')
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
+
+	You can use optional separator between numbers by adding it as argument:
+	>>> create_message('5 7 2 8', '; ')
+	'Мы оповестим вас о предстоящих событиях за 5; 7; 2 и 8 дней'
 
 	But beware using create_message with empty input:
 
@@ -85,7 +90,8 @@ def create_message(dates, separator=', '):
 		message = 'Мы оповестим вас о предстоящих событиях за {}'.format(str(integers)[1:-1]) + message
 
 	# replace comma with an selected separator
-	message = message.replace(', ', separator)
+	if separator:
+		message = message.replace(', ', separator)
 
 	return message
 
