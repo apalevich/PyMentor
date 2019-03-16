@@ -25,18 +25,22 @@ def create_message(dates, separator=', '):
 	'Мы оповестим вас о предстоящих событиях за 7 дней'
 	'''
 
-
 	#check input argument
-	if isinstance(dates, str):
-		try:
-			dates = list(map(int, dates.split()))
-		except ValueError:
-			raise Exception('Буквы вместо дат, либо неверная запятая')
-	if not len(dates):
+	if not dates:
 		raise Exception('Отсутствуют даты')
-	for n in dates:
-		if not type(n) == int:
-			raise Exception('Вместо даты использована буква')
+	integers = []
+
+	if isinstance(dates, str):
+		for c in dates:
+			if c.isdigit():
+				integers.append(c)
+		integers = list(map(int, integers))
+	elif isinstance(dates, (list, tuple)):
+		for c in dates:
+			try:
+				integers.append(int(c))
+			except ValueError:
+				raise Exception('Вместо даты использована буква')
 
 	message = ''
 	# choose correct case for ending word
@@ -59,7 +63,7 @@ def create_message(dates, separator=', '):
 	return message
 
 if __name__ == '__main__':
-	r = '7, 8, 5, 7, '
+	r = (1,)
 	print(create_message(r))
 	#
 	# import doctest
