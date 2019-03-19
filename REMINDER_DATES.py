@@ -36,8 +36,8 @@ def create_message(dates, separator=None):
 
 	Don’t worry about non-digit symbols:
 
-	>>> create_message(‘  24, 46, 745, а, рыбки?, 300 xxx    ’)
-	‘Мы оповестим вас о предстоящих событиях за 24, 46, 745 и 300 дней’
+	>>> create_message('  24, 46, 745, а, рыбки?, 300 xxx    ')
+	'Мы оповестим вас о предстоящих событиях за 24, 46, 745 и 300 дней'
 
 	You can use optional separator between numbers by adding it as argument:
 	>>> create_message('5 7 2 8', '; ')
@@ -75,7 +75,7 @@ def create_message(dates, separator=None):
 		    if i.isdigit():
 		        temp += i
 		    else:
-		        temp += ''
+		        temp += ' '
 		integers = temp.split()
 		integers = list(map(int, integers))
 	elif isinstance(dates, (list, tuple)):
