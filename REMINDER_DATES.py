@@ -32,7 +32,13 @@ def create_message(dates, separator=None):
 	>>> create_message('5 7 2 8')
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
 
+	Use any big numbers you want to:
+
+	>>> create_message('23 52, 63')
+	'Мы оповестим вас о предстоящих событиях за 23, 52 и 63 дня'
+
 	You can use optional separator between numbers by adding it as argument:
+
 	>>> create_message('5 7 2 8', '; ')
 	'Мы оповестим вас о предстоящих событиях за 5; 7; 2 и 8 дней'
 
@@ -63,10 +69,16 @@ def create_message(dates, separator=None):
 	integers = []
 
 	if isinstance(dates, str):
-		for c in dates:
-			if c.isdigit():
-				integers.append(c)
-		integers = list(map(int, integers))
+		temp = ''
+		for c in range(-1, len(dates)+1):
+			if dates[c].isdigit() and dates[c+1].isdigit():
+				temp += dates[c]
+			elif dates[c].isdigit() and not dates[c+1].isdigit():
+				integers.append(temp)
+			else:
+				temp = ''
+		print(integers)
+		# integers = list(map(int, integers))
 	elif isinstance(dates, (list, tuple)):
 		for c in dates:
 			try:
@@ -96,8 +108,6 @@ def create_message(dates, separator=None):
 	return message
 
 if __name__ == '__main__':
-	# r = (3, 5, 6, 3, 'a', )
-	# print(create_message(r))
-	#
+
 	import doctest
 	doctest.testmod()
