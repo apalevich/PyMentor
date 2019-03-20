@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 """
 This is an exercise maintained with my mentor Zcho05.
 The exercise contains function called create_message() that returns a message about some reminder.
@@ -32,10 +34,10 @@ def create_message(dates, separator=None):
 	>>> create_message('5 7 2 8')
 	'Мы оповестим вас о предстоящих событиях за 5, 7, 2 и 8 дней'
 
-	Use any big numbers you want to:
+	Don’t worry about non-digit symbols:
 
-	>>> create_message('23 52, 63')
-	'Мы оповестим вас о предстоящих событиях за 23, 52 и 63 дня'
+	>>> create_message('  24, 46, 745, а, рыбки?, 300 xxx    ')
+	'Мы оповестим вас о предстоящих событиях за 24, 46, 745 и 300 дней'
 
 	You can use optional separator between numbers by adding it as argument:
 
@@ -70,15 +72,13 @@ def create_message(dates, separator=None):
 
 	if isinstance(dates, str):
 		temp = ''
-		for c in range(-1, len(dates)+1):
-			if dates[c].isdigit() and dates[c+1].isdigit():
-				temp += dates[c]
-			elif dates[c].isdigit() and not dates[c+1].isdigit():
-				integers.append(temp)
-			else:
-				temp = ''
-		print(integers)
-		# integers = list(map(int, integers))
+		for i in dates:
+		    if i.isdigit():
+		        temp += i
+		    else:
+		        temp += ' '
+		integers = temp.split()
+		integers = list(map(int, integers))
 	elif isinstance(dates, (list, tuple)):
 		for c in dates:
 			try:
