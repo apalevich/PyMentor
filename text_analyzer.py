@@ -47,8 +47,6 @@ rus_low = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 rus_big = rus_low.upper()
 eng_low = 'abcdefghijklmnopqrstuvwxyz'
 eng_big = eng_low.upper()
-
-text_array = list(map(str, text.split()))
 ending_characters = ['.', '!', '?']
 
 def count_words(text):
@@ -61,6 +59,7 @@ def count_words(text):
     '''
     # count words
     words = 0
+    text_array = list(map(str, text.split()))
     for i in text_array:
         if i[0].isalpha() and len(i) > 1:
             words += 1
@@ -68,31 +67,19 @@ def count_words(text):
 
 def count_sentences(text):
     '''
-    description
+    >>> count_sentences('Please buy one cucumber & 3 apples')
+    1
     '''
-    sentences = 0
-    sentence_beginning = 0
-    sentence_ending = 0
-
-    for i in text_array:
-        if i[0] in eng_big or i[0] in rus_big:
-            sentence_beginning += 1
-
-        elif i[-1] in ending_characters:
-            sentence_ending += 1
-
-        if sentence_beginning > 0 and sentence_ending > 0:
-            sentence_beginning, sentence_ending = 0, 0
+    sentences = 1
+    text_array = list(map(str, text.split()))
+    testing_lenght = range(1, len(text_array))
+    for i in testing_lenght:
+        current_word = text_array[i]
+        previous_word = text_array[i-1]
+        if current_word[0].isupper() and previous_word[-1] in ending_characters:
             sentences += 1
-        print('{}, sentence_beginning: {}, sentence_ending: {}, total: {}'.format(i, sentence_beginning, sentence_ending, sentences))
 
     return sentences
-
-    # for c in text:
-    #     if c == '.':
-    #         sentences += 1
-
-    # TODO: придумать, как исключить подсчёт точек в сокращениях и числах
 
 def temp(text):
     # count russian words
@@ -123,14 +110,7 @@ def temp(text):
         if c.isupper():
             capitals += 1
 
-    print('words: {}, sentences: {}, russians: {}, english: {}, numbers: {}, capitals: {}'.format(words, sentences, russians, english, numbers, capitals))
-
 if __name__ == "__main__":
 
-    text_array = list(map(str, text.split()))
-    print(text_array)
-
-    print(count_sentences(text))
-
-    # import doctest
-    # doctest.testmod()
+    import doctest
+    doctest.testmod()
