@@ -1,78 +1,66 @@
 #!/usr/bin/env python3
 
-# Дан текст (точно в код скопировать, не исправлять):
-#
-text = """
+'''
+Here is a few tools to analyze a text.
+Full list of functions and their returns:
+
+* count_words — returns integer of how many words (more than 1 character) is here
+* count_sentences - returns integers of how many sentences is here
+* words in russian - returns integers of russian words
+* words in english - returns integers of english words
+* numbers - returns integers of numbers in a text (1 digit or more)
+* capital letters - returns integers of upper letters in a text
+
+Every feature realized as an separate function.
+
+So general usecase for them is to give it a piece of text as an argument
+and it returns the counters as integer.
+'''
+
+text_for_test = """
 Допустим, наша цель — выяснить людей, места и все что угодно, связанные друг с другом в наших    документах. Иными словами, нам нужно построить социальную сеть, выполнив серию    преобразований, как показано на рис. 9.4. Начнем конструирование графа с применения   класса EntityExtractor, созданного в главе 7.
 
 Затем добавим преобразователи, один   из которых отыскивает        пары связанных сущностей, а второй преобразует эти пары в граф."""
-# Нужно посчитать количество:
-#
-# слов в нём;
-# предложений;
-# слов на русском языке;
-# слов на англ. языке;
-# чисел
-# заглавных букв
 
-'''
-Here is a few tools to analyze a text. Here is a full list of functions and their features:
-
-* count_words — counting words (more than 1 character)
-* count_sentences - c
-* words in russian
-* words in english
-* numbers
-* capital letters
-
-Every point has a separate counter and while done the function returns them all.
-In future, I looking forward to improve function's ability to choose
-required counters and make it return only their values.
-
-So general usecase for text_analyzer is to give it a piece of text as an argument
-and it returns all the counters as variables and their integers:
-
->>> text = """
-... Допустим, наша цель — выяснить людей, места и все что угодно, связанные друг с другом в наших    документах. Иными словами, нам нужно построить социальную сеть, выполнив серию    преобразований, как показано на рис. 9.4. Начнем конструирование графа с применения   класса EntityExtractor, созданного в главе 7.
-...
-...Затем добавим преобразователи, один   из которых отыскивает        пары связанных сущностей, а второй преобразует эти пары в граф."""
-
->>> text_analyzer(text)
-
-'''
-
-# first, we create variables using in some functions
+# first, we create strings with alphabet
 
 rus_low = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 rus_big = rus_low.upper()
 eng_low = 'abcdefghijklmnopqrstuvwxyz'
 eng_big = eng_low.upper()
-ending_characters = ['.', '!', '?']
 
 def count_words(text):
-    '''
-    Function counts words in a text.
+    """
+    This function counts words in a text.
     Numbers and words less than 2 characters doesn't counts:
 
     >>> count_words('Please buy one cucumber & 3 apples')
     5
-    '''
-    # count words
+    """
     words = 0
     text_array = list(map(str, text.split()))
+
     for i in text_array:
         if i[0].isalpha() and len(i) > 1:
             words += 1
+
     return words
 
 def count_sentences(text):
-    '''
-    >>> count_sentences('Please buy one cucumber & 3 apples')
-    1
-    '''
+    """
+    Counts sentences in a text and return it as integer.
+    Sentence in this case is beginning with an upper letter
+    and ends with '.', '!' or '?'. At least 1
+
+    >>> count_sentences(text_for_test)
+    4
+    """
     sentences = 1
+
     text_array = list(map(str, text.split()))
     testing_lenght = range(1, len(text_array))
+    ending_characters = ['.', '!', '?']
+
     for i in testing_lenght:
         current_word = text_array[i]
         previous_word = text_array[i-1]
@@ -81,34 +69,52 @@ def count_sentences(text):
 
     return sentences
 
-def temp(text):
-    # count russian words
+def count_russian_words(text):
+    """
+    Counts words in Russian by checking its first letter:
+
+    >>> count_russian_words(text_for_test)
+    57
+    """
+    text_array = list(map(str, text.split()))
     russians = 0
-    # for i in text_array:
-    #     if i[0].isalpha() and i[0].encode() >= 0 and i[0].encode() >= 0:
-    #         russians += 1
-    # TODO: проверить метод unicode и номера кириллических символов в ней,
-    # либо придумать иной способ
 
-    # count english words
+    for word in text_array:
+        if word[0] in rus_big or word[0] in rus_low:
+            russians += 1
+
+    return russians
+
+def count_english_letters(text):
+    """
+    Counts words in English by checking its first letter:
+
+    >>> count_english_letters(text_for_test)
+    1
+    """
+    text_array = list(map(str, text.split()))
     english = 0
-    # for i in text_array:
-    #     if i[0].isalpha() and i[0].encode() > 0 and i[0].encode() <= 128:
-    #         english += 1
-    # TODO: проверить метод unicode и номера кириллических символов в ней,
-    # либо придумать иной способ
 
-    # count numbers
-    numbers = 0
-    for i in text_array:
-        if i[0].isdigit():
-            numbers += 1
+    for word in text_array:
+        if word[0] in eng_big or word[0] in eng_low:
+            english += 1
 
-    # count capital letters
+    return english
+
+def count_capital_letters(text):
+    """
+    Counts words with Capital letters:
+
+    >>> count_capital_letters(text_for_test)
+    6
+    """
     capitals = 0
     for c in text:
         if c.isupper():
             capitals += 1
+
+    return capitals
+
 
 if __name__ == "__main__":
 
