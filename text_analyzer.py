@@ -26,8 +26,10 @@ text_for_test = """
 
 rus_low = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 rus_big = rus_low.upper()
+rus_alphabet = rus_low + rus_big
 eng_low = 'abcdefghijklmnopqrstuvwxyz'
 eng_big = eng_low.upper()
+eng_alphabet = eng_low + eng_big
 
 def count_words(text):
     """
@@ -69,37 +71,30 @@ def count_sentences(text):
 
     return sentences
 
-def count_russian_words(text):
+def count_words_by_language(text, alphabet = eng_alphabet):
     """
-    Counts words in Russian by checking its first letter:
+    Counts words in a language by checking its first letter.
+    First argument must be a string with text, second is an dictionary (optional).
 
-    >>> count_russian_words(text_for_test)
+    Dictionary is just a string or list with alphabet.
+    Pay attention to include in dictionary both lowcase and uppercase letters:
+
+    >>> count_words_by_language(text_for_test, rus_alphabet)
     57
-    """
-    text_array = list(map(str, text.split()))
-    russians = 0
 
-    for word in text_array:
-        if word[0] in rus_big or word[0] in rus_low:
-            russians += 1
+    If dict is not specified, english alphabet is used by default:
 
-    return russians
-
-def count_english_letters(text):
-    """
-    Counts words in English by checking its first letter:
-
-    >>> count_english_letters(text_for_test)
+    >>> count_words_by_language(text_for_test)
     1
     """
     text_array = list(map(str, text.split()))
-    english = 0
+    counter = 0
 
     for word in text_array:
-        if word[0] in eng_big or word[0] in eng_low:
-            english += 1
+        if word[0] in alphabet:
+            counter += 1
 
-    return english
+    return counter
 
 def count_capital_letters(text):
     """
