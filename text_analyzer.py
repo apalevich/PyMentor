@@ -6,10 +6,8 @@ Full list of functions and their returns:
 
 * count_words — returns integer of how many words (more than 1 character) is here
 * count_sentences - returns integers of how many sentences is here
-* words in russian - returns integers of russian words
-* words in english - returns integers of english words
-* numbers - returns integers of numbers in a text (1 digit or more)
-* capital letters - returns integers of upper letters in a text
+* count_words_by_language - returns integers of words belongs to any alphabet
+* count_capital_letters - returns integers of upper letters in a text
 
 Every feature realized as an separate function.
 
@@ -110,6 +108,22 @@ def count_capital_letters(text):
 
     return capitals
 
+def count_numbers(text):
+    """
+    Count numbers in a text:
+
+    >>> count_numbers(text_for_test)
+    2
+
+    """
+    text_array = list(map(str, text.split()))
+    numbers = 0
+
+    for i in text_array:
+        if i[0].isdigit():
+            numbers += 1
+
+    return numbers
 
 if __name__ == "__main__":
 
