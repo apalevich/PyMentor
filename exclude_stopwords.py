@@ -45,8 +45,27 @@ def exclude_stopwords(path_to_text):
         else:
             stats[keyword] = 1
 
-    return stats
+    temp = []
+    for i in stats.keys():
+        temp2 = [i, stats[i]]
+        temp.append(temp2)
 
+    def sorting():
+        testing_lenght = range(1, len(temp))
+        changes = False
+        for i in testing_lenght:
+            current_word = temp[i]
+            previous_word = temp[i-1]
+            if current_word[1] > previous_word[1]:
+                temp_word = current_word
+                current_word = previous_word
+                previous_word = temp_word
+                changes = True
+        while changes:
+            sorting()
+
+    sorting()
+    return temp
 
 # TODO:
 # слова в виде листа
