@@ -1,23 +1,37 @@
-# get input text from a file
-text = open('/tmp/text.txt', 'w')
+#!/usr/bin/env python3
 
-# download file with stop-words
+# TODO: написать доктест
+
 import requests
-url = 'https://github.com/Alir3z4/stop-words/raw/bd8cc1434faeb3449735ed570a4a392ab5d35291/russian.txt'
-response = requests.get(url)
-stopwords = open('/tmp/stopwords.txt', 'wb')
-stopwords.write(response.content)
-stopwords.close()
 
-#make a list with stopwords
-sw = []
-stopwords = open('/tmp/stopwords.txt', 'r')
-for line in stopwords:
-    sw.append(line[:-1])
+def exclude_stopwords(path_to_text):
+    # get input text from a file to list
+    original_text = open(path_to_text, 'r')
+    text_list = original_text.read().split()
 
-# Удалить из текста stop_words, что бы они не участвовали в статистике.
-text_set = list(map(str, text.split()))
-stopwords_set = set(map(str, text.split()))
-clear_text = text_set - stopwords_set
+    # download file with stop-words
+    url = 'https://github.com/Alir3z4/stop-words/raw/bd8cc1434faeb3449735ed570a4a392ab5d35291/russian.txt'
+    response = requests.get(url)
+    stopwords = open('/tmp/stopwords.txt', 'wb')
+    stopwords.write(response.content)
+    stopwords.close()
 
-# выдавать статистику по частоте вхождения в текст каждого слова - самые частые слова сначала.
+    # make a list with stopwords
+    stopwords_list = []
+    stopwords = open('/tmp/stopwords.txt', 'r')
+    for line in stopwords:
+        stopwords_list.append(line[:-1])
+
+    # finally exclude stopwords from original text
+    cleaned_text = []
+    for word in text_list:
+        if not word in stopwords_list:
+            cleaned_text.append(word)
+
+    return ' '.join(cleaned_text)
+
+if __name__ == "__main__":
+    print(exclude_stopwords('/tmp/text.txt'))
+
+
+# TODO: выдавать статистику по частоте вхождения в текст каждого слова - самые частые слова сначала.
