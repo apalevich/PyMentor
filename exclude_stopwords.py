@@ -40,7 +40,9 @@ def exclude_stopwords(path_to_text):
             if char.isalpha():
                 keyword += char
 
-        if keyword in stats.keys():
+        if not keyword.isalpha():
+            pass
+        elif keyword in stats.keys():
             stats[keyword] += 1
         else:
             stats[keyword] = 1
