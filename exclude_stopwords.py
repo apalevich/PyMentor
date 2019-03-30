@@ -45,33 +45,14 @@ def exclude_stopwords(path_to_text):
         else:
             stats[keyword] = 1
 
-    temp = []
-    for i in stats.keys():
-        temp2 = [i, stats[i]]
-        temp.append(temp2)
+    sorted_stats = sorted(stats.items(), key = lambda x: x[1], reverse = True)
 
-    def sorting():
-        testing_lenght = range(1, len(temp))
-        changes = False
-        for i in testing_lenght:
-            current_word = temp[i]
-            previous_word = temp[i-1]
-            if current_word[1] > previous_word[1]:
-                temp_word = current_word
-                current_word = previous_word
-                previous_word = temp_word
-                changes = True
-        while changes:
-            sorting()
+    stats_string = ""
 
-    sorting()
-    return temp
+    for i in sorted_stats:
+        stats_string += '{} — {} раз\n'.format(i[0], i[1])
 
-# TODO:
-# слова в виде листа
-# считать сколько раз входит
+    return stats_string
 
 if __name__ == "__main__":
     print(exclude_stopwords('/tmp/copy.txt'))
-
-# TODO: выдавать статистику по частоте вхождения в текст каждого слова - самые частые слова сначала.
