@@ -2,28 +2,22 @@
 
 # TODO: написать доктест
 
-import requests
+from urllib.request import urlopen
 
 def exclude_stopwords(path_to_text):
     # TODO: написать доктест
 
     # get input text from a file to list
-    original_text = open(path_to_text, 'r')
-    text_string = original_text.read()
-    text_list = text_string.split()
+    with open(path_to_text, 'r') as original_text:
+        text_string = original_text.read()
+        text_list = text_string.split()
 
     # download file with stop-words
-    url = 'https://github.com/Alir3z4/stop-words/raw/bd8cc1434faeb3449735ed570a4a392ab5d35291/russian.txt'
-    response = requests.get(url)
-    stopwords = open('/tmp/stopwords.txt', 'wb')
-    stopwords.write(response.content)
-    stopwords.close()
-
-    # make a list with stopwords
+    stopwords_source = 'https://github.com/Alir3z4/stop-words/raw/bd8cc1434faeb3449735ed570a4a392ab5d35291/russian.txt'
     stopwords_list = []
-    stopwords = open('/tmp/stopwords.txt', 'r')
-    for line in stopwords:
-        stopwords_list.append(line[:-1])
+    with urlopen(stopwords_source) as stopwords:
+        for line in stopwords:
+            stopwords_list.append(line)
 
     # finally exclude stopwords from original text
     cleaned_text = []
@@ -57,4 +51,4 @@ def exclude_stopwords(path_to_text):
     return stats_string
 
 if __name__ == "__main__":
-    print(exclude_stopwords('/tmp/copy.txt'))
+    print(exclude_stopwords('./sample.txt'))
