@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# -*- coding: utf-8 -*-
 # TODO: написать доктест
 
 from urllib.request import urlopen
@@ -8,7 +8,7 @@ def exclude_stopwords(path_to_text):
     # TODO: написать доктест
 
     # get input text from a file to list
-    with open(path_to_text, 'r') as original_text:
+    with open(path_to_text, 'r', encoding = 'utf-8') as original_text:
         text_string = original_text.read()
         text_list = text_string.split()
 
