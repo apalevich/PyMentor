@@ -11,7 +11,7 @@ def exclude_stopwords(path_to_text):
     # get input text from a file to list
     with open(path_to_text, 'r', encoding = 'utf-8') as original_text:
         text_string = original_text.read()
-        text_list = text_string.split()
+        text_list = text_string.lower().split()
 
     # download file with stop-words
     stopwords_source = 'https://github.com/Alir3z4/stop-words/raw/bd8cc1434faeb3449735ed570a4a392ab5d35291/russian.txt'
