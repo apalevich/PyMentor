@@ -45,9 +45,15 @@ def exclude_stopwords(path_to_text):
     def get_value(x):
         return x[1]
 
+<<<<<<< HEAD
     sorted_stats = sorted(stats.items(), key = get_value, reverse = True)
     # sorted_stats = sorted(stats.items(), key = lambda x: x[1], reverse = True)
     # sorted_stats = sorted(stats.items(), key = itemgetter(1), reverse = True)
+=======
+    # sorted_stats = sorted(stats.items(), key = get_value, reverse = True)
+    # sorted_stats = sorted(stats.items(), key = lambda x: x[1], reverse = True)
+    sorted_stats = sorted(stats.items(), key = itemgetter(1), reverse = True)
+>>>>>>> 833104f2581d9151c918e35f5c168294440d4deb
 
     stats_string = ""
 
