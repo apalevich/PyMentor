@@ -42,7 +42,12 @@ def exclude_stopwords(path_to_text):
         else:
             stats[keyword] = 1
 
-    sorted_stats = sorted(stats.items(), key = itemgetter(1), reverse = True)
+    def get_value(x):
+        return x[1]
+
+    sorted_stats = sorted(stats.items(), key = get_value, reverse = True)
+    # sorted_stats = sorted(stats.items(), key = lambda x: x[1], reverse = True)
+    # sorted_stats = sorted(stats.items(), key = itemgetter(1), reverse = True)
 
     stats_string = ""
 
