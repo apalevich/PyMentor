@@ -58,3 +58,4 @@ def exclude_stopwords(path_to_text):
 
 if __name__ == "__main__":
     print(exclude_stopwords('./sample.txt'))
+    # TODO: заменить на doctest
