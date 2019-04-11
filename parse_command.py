@@ -23,15 +23,21 @@ Values can be separated not only by spaces:
 
 But beware giving no values:
 >>> parse_command('add gazp')
-Exception: 'Укажите значение цены'
+Traceback (most recent call last):
+    ...
+Exception: Укажите значение цены
 
 Value should be a number:
 >>> parse_command('add gazp asdf')
-'Значение должно быть числом'
+Traceback (most recent call last):
+    ...
+Exception: Значение должно быть числом
 
 Both of values should be a numbers:
 >>> parse_command('add gazp asdf 1')
-'Значение должно быть числом'
+Traceback (most recent call last):
+    ...
+Exception: Значение должно быть числом
 """
 
 def parse_command(cmd:str) -> dict:
@@ -41,6 +47,7 @@ def parse_command(cmd:str) -> dict:
     # make some warnings
     if len(cmd_list) < 3:
         raise Exception('Укажите значение цены')
+
 
     if cmd_list[0].isalpha():
         cmd_dict['action'] = cmd_list[0]
@@ -54,21 +61,26 @@ def parse_command(cmd:str) -> dict:
 
     # parce values
     values = []
-    if cmd_list[2].isdigit() and len(cmd_list) == 3:
+
+    if len(cmd_list) == 3 and cmd_list[2].isdigit():
         cmd_dict['value'] = int(cmd_list[2])
+    elif len(cmd_list) == 4 and cmd_list[2].isdigit() and cmd_list[3].isdigit():
+        cmd_dict['value'] = int(cmd_list[2])
+        cmd_dict['value2'] = int(cmd_list[3])
     else:
         separator = ' '
         for c in cmd_list[2]:
             if not c.isdigit():
                 separator = c
         values = cmd_list[2].split(separator)
+
+        for value in values:
+            if not value.isdigit():
+                raise Exception('Значение должно быть числом')
+
         cmd_dict['value'] = int(values[0])
         if len(values) > 1:
             cmd_dict['value2'] = int(values[1])
-
-    for value in values:
-        if not value.isdigit():
-            raise Exception('Значение должно быть числом')
 
     return cmd_dict
 
