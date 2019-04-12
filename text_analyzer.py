@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-'''
+"""
 Here is a few tools to analyze a text.
 Full list of functions and their returns:
 
@@ -13,15 +14,15 @@ Every feature realized as an separate function.
 
 So general usecase for them is to give it a piece of text as an argument
 and it returns the counters as integer.
-'''
 
+"""
+# Sample text for doctect
 text_for_test = """
 Допустим, наша цель — выяснить людей, места и все что угодно, связанные друг с другом в наших    документах. Иными словами, нам нужно построить социальную сеть, выполнив серию    преобразований, как показано на рис. 9.4. Начнем конструирование графа с применения   класса EntityExtractor, созданного в главе 7.
 
 Затем добавим преобразователи, один   из которых отыскивает        пары связанных сущностей, а второй преобразует эти пары в граф."""
 
-# first, we create strings with alphabet
-
+# First, we create alphabets
 rus_low = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 rus_big = rus_low.upper()
 rus_alphabet = rus_low + rus_big
@@ -36,6 +37,7 @@ def count_words(text):
 
     >>> count_words('Please buy one cucumber & 3 apples')
     5
+
     """
     words = 0
     text_array = list(map(str, text.split()))
@@ -54,6 +56,7 @@ def count_sentences(text):
 
     >>> count_sentences(text_for_test)
     4
+
     """
     sentences = 1
 
@@ -84,6 +87,7 @@ def count_words_by_language(text, alphabet = eng_alphabet):
 
     >>> count_words_by_language(text_for_test)
     1
+
     """
     text_array = list(map(str, text.split()))
     counter = 0
@@ -100,6 +104,7 @@ def count_capital_letters(text):
 
     >>> count_capital_letters(text_for_test)
     6
+
     """
     capitals = 0
     for c in text:
@@ -126,6 +131,6 @@ def count_numbers(text):
     return numbers
 
 if __name__ == "__main__":
-
+    # Launch doctect
     import doctest
     doctest.testmod()
