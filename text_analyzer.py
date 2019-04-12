@@ -17,18 +17,18 @@ and it returns the counters as integer.
 
 """
 # Sample text for doctect
-text_for_test = """
+TEXT_FOR_TEST = """
 Допустим, наша цель — выяснить людей, места и все что угодно, связанные друг с другом в наших    документах. Иными словами, нам нужно построить социальную сеть, выполнив серию    преобразований, как показано на рис. 9.4. Начнем конструирование графа с применения   класса EntityExtractor, созданного в главе 7.
 
 Затем добавим преобразователи, один   из которых отыскивает        пары связанных сущностей, а второй преобразует эти пары в граф."""
 
 # First, we create alphabets
-rus_low = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
-rus_big = rus_low.upper()
-rus_alphabet = rus_low + rus_big
-eng_low = 'abcdefghijklmnopqrstuvwxyz'
-eng_big = eng_low.upper()
-eng_alphabet = eng_low + eng_big
+RUS_LOW = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+RUS_BIG = rus_low.upper()
+RUS_ALPHABET = rus_low + rus_big
+ENG_LOW = 'abcdefghijklmnopqrstuvwxyz'
+ENG_BIG = eng_low.upper()
+ENG_ALPHABET = eng_low + eng_big
 
 def count_words(text):
     """
