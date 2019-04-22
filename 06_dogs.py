@@ -2,29 +2,30 @@
 # -*- coding: utf-8 -*-
 
 """
-Описать в виде класса собаку (Dog).
-У него должны быть следующие свойства:
-имя, дата рождения, голос
+Exercise with classes and objects.
 
-Создать 2-а экземпляра класса Dog со следующими параметрами
-"Бобик", 1 января 2017, 'тяв-тяв'
-"Тяпа", 2 января 2016, 'гав-гав'
+We create class Dog so we can use create objects-dogs:
 
-Добавить возможность производить щенков следующим образом
+>>> bob = Dog('Bob')
+>>> print(bob.name)
+Bob
 
-puppy = boy_dog + girl_dog
+Using arguments we can give it not only name but date of birth (as an list) and example of voice:
 
-Который в результате даёт:
+>>> snatch = Dog('Snatch', [2017, 4, 12], 'Wuf wuf')
+>>> print(snatch.birth_date)
+[2017, 4, 12]
 
-puppy.voice()
-# т.е. должно возвратить голоса М и Ж собак
->>> 'тяв-тяв гав-гав'
+You can use object methods as well by adding 'get_' before:
+>>> print(snatch.get_voice())
+Wuf wuf
 
-puppy.name()
->>> 'Щенок от собак Бобик и Тяпа'
+One more thing: ability to create puppies by summarizing dogs:
 
-puppy.birth_date()
-# должно возвратить дату от рождения первой собаки родителя  + 480 дней.
+>>> puppy = bob + snatch
+>>> print(puppy.get_birth_date())
+1971-04-26 00:00:00
+
 """
 
 from datetime import datetime
@@ -33,47 +34,33 @@ from datetime import timedelta
 
 class Dog:
 
-    def __init__(self, name, birth_date, voice):
+    def __init__(self, name='Имя', birth_date = [1970, 1, 1], voice='Голос'):
 
         self.name = name
         self.voice = voice
-        self.birth_date = datetime(*birth_date)
+        self.birth_date = birth_date
 
     def __add__(self, other):
-        elder_dog = self.birth_date
+
+        birth_date = self.birth_date
         if self.birth_date > other.birth_date:
-            elder_dog = other.birth_date
-
-        # self.birth_date = elder_dog + timedelta(days=480)
-        # self.voice = '{voice1} {voice2}'.format(voice1=self.voice, voice2=other.voice)
-        # self.name = 'Щенок от собак {} и {}'.format(self.name, other.name)
-
-        birth_date = elder_dog + timedelta(days=480)
+            birth_date = other.birth_date
         voice = '{voice1} {voice2}'.format(voice1=self.voice, voice2=other.voice)
         name = 'Щенок от собак {} и {}'.format(self.name, other.name)
         return Dog(name, birth_date, voice)
 
-    def voice(self):
+    def get_voice(self):
         return self.voice
 
-    def name(self):
+    def get_name(self):
         return self.name
 
-    def birth_date(self):
-        return self.birth_date
+    def get_birth_date(self):
 
-# class Puppy(Dog):
-
-    # def __init__(self, male, female):
-    #
-    #     self.dad_name = male.name
-    #     self.dad_voice = male.voice
-    #     self.dad_birth_date = male.birth_date
-    #
-    #     self.mom_name = female.name
-    #     self.mom_voice = female.voice
-    #     self.mom_birth_date = female.birth_date
-
+        if 'Щенок от собак' in self.name:
+            return datetime(*self.birth_date) + timedelta(days=480)
+        else:
+            return datetime(*self.birth_date)
 
 boy_dog = Dog('Бобик', [2017, 1, 1], 'тяф-тяф')
 girl_dog = Dog('Тяпа', [2016, 1, 2], 'гав-гав')
@@ -81,15 +68,6 @@ puppy = boy_dog + girl_dog
 
 if __name__ == '__main__':
 
-    print(puppy.name())
-    print(puppy.voice())
-    print(puppy.birth_date())
-
-    print(puppy.name())
-    print(puppy.voice())
-    print(puppy.birth_date())
-
-
-    print(puppy.name())
-    print(puppy.voice())
-    print(puppy.birth_date())
+    # Test cases from docstrings
+    import doctest
+    doctest.testmod()
