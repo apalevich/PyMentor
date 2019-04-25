@@ -26,35 +26,43 @@ goto, 115, 70, 1, black
 goto, 150, 70, 1, black
 goto, 150, 40, 1, black
 endfill
-
-Каждое первое слово в новой строке этого файла соответствует методу из класса Turtle.
-А после запятой идут его параметры(если есть).
-
-Использую модуль черепашка
-
->>>import turtle
-нужно прочитав команды из файла нарисовать движения "черепашки" на экране.
 """
 import turtle
+import time
 
-with open('./draw.txt', 'r') as draw_file:
+def create_drawing():
+    with open('./draw.txt', 'r') as draw_file:
 
-    for line in draw_file:
-        line_list = line.split(',')
-        if len(line_list) > 1:
+        for line in draw_file:
+            line_list = line.split(',')
 
-            if line_list[-1].isalpha():
-                exec(f'turtle.color("{line_list[-1]}")')
+            for index, element in enumerate(line_list):
+                if element[-1].isdigit():
+                    line_list[index] = int(element)
 
-            if beginfill in line_list[0]:
-                turtle.begin_fill()
-            if endfill in line_list[0]:
-                turtle.end_fill()
-            if circle in line_list:
-                exec('turtle.circle({line_list[1]},{line_list[2]})')
-            
+            if len(line_list) > 1:
 
-        else:
-            command = 'turtle.' + line_list[0]
+                if line_list[-1].isalpha():
+                    exec(f'turtle.color("{line_list[-1]}")')
 
-        exec(command)
+                if 'beginfill' in line_list[0]:
+                    turtle.begin_fill()
+                if 'circle' in line_list:
+                    exec(f'turtle.circle({line_list[1]},{line_list[2]})')
+                if 'goto' in line_list[0]:
+                    turtle.pensize(int(line_list[-2]))
+                    turtle.goto(line_list[1], line_list[2])
+
+            else:
+                if 'pendown' in line_list[0]:
+                    turtle.pendown()
+                if 'penup' in line[0]:
+                    turtle.penup()
+                if 'endfill' in line_list[0]:
+                    turtle.end_fill()
+
+        time.sleep(10)
+
+
+if __name__ == '__main__':
+    create_drawing()
