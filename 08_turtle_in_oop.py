@@ -4,47 +4,82 @@
 import turtle
 import time
 
-class GoToDraw:
-    def __init__(self, x, y, width=1, color='black'):
-        self.x = float(x.strip())
-        self.y = float(y.strip())
-        self.width = float(width.strip())
-        self.color = color
 
-    # def draw(self, turtle):
-    #     turtle.width = self.width
-    #     turtle.color = self.color
+class BeginFillCommand:
 
-    def draw(self, action):
-        if self.action == 'beginfill':
-            turtle.color(self.color)
-            turtle.begin_fill()
+    def __init__(self, color):
+        self.color = str(color)
 
-        if self.action == 'circle':
-            turtle.color(self.color)
-            turtle.circle(self.x, self.y)
+    def draw(self):
+        turtle.color(self.color)
+        turtle.begin_fill()
 
-        if self.action == 'endfill':
-            turtle.end_fill()
+class CircleCommand:
 
-        if self.action == 'penup':
-            turtle.penup()
+    def __init__(self, radius, extent, color):
+        self.radius = float(radius)
+        self.extent = float(extent)
+        self.color = str(color)
 
-        if self.action == 'goto':
-            turtle.color(self.color)
-            turtle.width(self.width)
+    def draw(self):
+        turtle.color(self.color)
+        turtle.circle(self.radius, self.extent)
 
-        if self.action == 'pendown':
-            turtle.pendown()
+class EndFillCommand:
 
-with open('./draw.txt') as draw_file:
+    def draw(self):
+        turtle.end_fill()
 
-    for line in draw_file:
+class PenUpCommand:
 
-        line_list = line[:-1].split(',')
-        a,b,c,d,e = *line_list
-        action = GoToDraw()
+    def draw(self):
+        turtle.penup()
 
-        action.draw(line_list[0])
+class GoToCommand:
 
-    time.sleep(3)
+    def __init__(self, x, y, width, color):
+        self.x = float(x)
+        self.y = float(y)
+        self.width = float(width)
+        self.color = str(color)
+
+    def draw(self):
+        turtle.color(self.color)
+        turtle.width(self.width)
+        turtle.goto(self.x, self.y)
+
+class PenDownCommand:
+
+    def draw(self):
+        turtle.pendown()
+
+
+if __name__ == '__main__':
+
+    with open('./draw.txt') as draw_file:
+
+        for line in draw_file:
+
+            line_list = line[:-1].split(',')
+            command = line_list[0]
+            args = line_list[1:]
+
+            if command == 'beginfill':
+                BeginFillCommand.draw(*args)
+
+            if command == 'circle':
+                CircleCommand.draw(*args)
+
+            if command == 'endfill':
+                EndFillCommand.draw()
+
+            if command == 'penup':
+                PenUpCommand.draw()
+
+            if command == 'goto':
+                GoToCommand.draw(*args)
+
+            if command == 'pendown':
+                PenDownCommand.draw()
+
+        time.sleep(3)
