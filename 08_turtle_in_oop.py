@@ -8,7 +8,7 @@ import time
 class BeginFillCommand:
 
     def __init__(self, color):
-        self.color = str(color)
+        self.color = str(color).strip()
 
     def draw(self):
         turtle.color(self.color)
@@ -19,7 +19,7 @@ class CircleCommand:
     def __init__(self, radius, extent, color):
         self.radius = float(radius)
         self.extent = float(extent)
-        self.color = str(color)
+        self.color = str(color).strip()
 
     def draw(self):
         turtle.color(self.color)
@@ -41,7 +41,7 @@ class GoToCommand:
         self.x = float(x)
         self.y = float(y)
         self.width = float(width)
-        self.color = str(color)
+        self.color = str(color).strip()
 
     def draw(self):
         turtle.color(self.color)
@@ -65,21 +65,27 @@ if __name__ == '__main__':
             args = line_list[1:]
 
             if command == 'beginfill':
-                BeginFillCommand.draw(*args)
+                output = BeginFillCommand(*args)
+                output.draw()
 
             if command == 'circle':
-                CircleCommand.draw(*args)
+                output = CircleCommand(*args)
+                output.draw()
 
             if command == 'endfill':
-                EndFillCommand.draw()
+                output = EndFillCommand()
+                output.draw()
 
             if command == 'penup':
-                PenUpCommand.draw()
+                output = PenUpCommand()
+                output.draw()
 
             if command == 'goto':
-                GoToCommand.draw(*args)
+                output = GoToCommand(*args)
+                output.draw()
 
             if command == 'pendown':
-                PenDownCommand.draw()
+                output = PenDownCommand()
+                output.draw()
 
-        time.sleep(3)
+        time.sleep(10)
