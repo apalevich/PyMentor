@@ -11,7 +11,7 @@ datetime.timedelta(days=30)
 datetime.date(2019, 5, 27)
 
 >>> user.trial_days_left()
-26
+30
 
 If trial is expired the function returns 0.
 """
@@ -25,11 +25,12 @@ class ChatUser:
 
     def trial_days_left(self):
         self.end = self.created + self.trial
+        self.left = self.end - dt.date.today()
 
-        if self.end.day <= 0:
+        if self.left.days <= 0:
             return 0
         else:
-            return self.end.day
+            return self.left.days
 
 if __name__ == '__main__':
 
