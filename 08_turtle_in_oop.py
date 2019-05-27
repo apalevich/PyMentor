@@ -56,7 +56,7 @@ class PenDownCommand:
 
 if __name__ == '__main__':
 
-    with open('./draw.txt') as draw_file:
+    with open('./08_draw_commands_list.txt') as draw_file:
 
         for line in draw_file:
 
