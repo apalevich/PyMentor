@@ -65,20 +65,12 @@ class ChatUser:
             self.active = False
 
     def send_trial_ends_reminder(self):
-<<<<<<< HEAD
         if self.trial_days_left.days in range(1,4):
-=======
-        if self.trial_days_left.days == any([x for x in range(1,4)]):
->>>>>>> 423adc8ef8076b542f3497cab28a531843576b8e
             message = "Ваш тестовый период заканчивается {}. Пожалуйста, оплатите подписку".format(self.trial_ends_date)
             # TODO: complete function with email sending
 
     def send_paid_ends_reminder(self):
-<<<<<<< HEAD
         if self.paid_days_left.days in range(1,4):
-=======
-        if self.paid_days_left.days == any([x for x in range(1,4)]):
->>>>>>> 423adc8ef8076b542f3497cab28a531843576b8e
             message = "Ваш оплаченный период заканчивается {}. Пожалуйста, пополните счёт".format(self.paid_ends_date)
             # TODO: complete function with email sending
 
