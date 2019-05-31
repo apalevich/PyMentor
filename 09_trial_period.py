@@ -3,35 +3,41 @@ The class of a user with trial period is given. Every user has a 30 days in demo
 We have to write the function that returns how many days remain. Timer starts now.
 
 Create new user as the class object. User's name, surname and username are required:
-
 >>> user = ChatUser("Thomas", "Anderson", "Neo", dt.date.today())
 
 By default new user is active and has trial period:
-
 >>> user.trial_lenght
 datetime.timedelta(days=30)
 
-You can check whether user has been created and whether his trial ends:
+The user has paid period either. By default it's 0
+so you can just add here days the user charged following his plan:
+>>> user.paid_days
+0
 
+You can check whether user has been created and whether his trial or paid period ends:
 >>> user.created
-datetime.date(2019, 5, 27)
-
+datetime.date(2019, 5, 31)
 >>> user.trial_ends_date
-datetime.date(2019, 6, 26)
+datetime.date(2019, 6, 30)
+>>> user.paid_ends_date
+datetime.date(2019, 6, 30)
 
 Function count_trial_days_left() is designed to check how many trial days left.
 If there is no days left the account is disabling and the function returns 0:
-
 >>> user.count_trial_days_left()
 30
 
-Another function called send_trial_ends_reminder() has to send message to user a reminder
-before 1, 2 and 3 days before the trial is expired:
+count_paid_days_left() works the same way:
+>>> user.count_paid_days_left()
+0
 
->>> send_trial_ends_reminder()
-# TODO: complete function
+Another functions called send_trial_ends_reminder() and send_paid_ends_reminder().
+It has to send message to user 1, 2 and 3 days before the trial is expired:
+>>> user.send_trial_ends_reminder()
+>>> user.send_paid_ends_reminder()
 
-# TODO: complete doc
+After all, function disable_unpaid_user() is here to disable an account:
+>>> user.disable_unpaid_user()
 
 """
 
@@ -41,7 +47,7 @@ class ChatUser:
     def __init__(self, name, surname, username, created):
         self.name = name
         self.surname = surname
-        sefl.username = username
+        self.username = username
         self.created = created
         self.active = True
 
@@ -52,21 +58,21 @@ class ChatUser:
         self.paid_days = 0
         self.paid_lenght = dt.timedelta(days = self.paid_days)
         self.paid_ends_date = self.trial_ends_date + self.paid_lenght
-        self.paid_days_left = self.paid_ends_date - dt.date.today()
+        self.paid_days_left = self.paid_ends_date - dt.timedelta(days = self.count_trial_days_left()) - dt.date.today()
 
-    def dasiable_unpaid_user(self):
+    def disable_unpaid_user(self):
         if self.trial_days_left.days <= 0 and self.paid_days_left.day  <= 0:
             self.active = False
 
     def send_trial_ends_reminder(self):
-        if self.trial_days_left.days == any(range(1, 4)):
+        if self.trial_days_left.days in range(1,4):
             message = "Ваш тестовый период заканчивается {}. Пожалуйста, оплатите подписку".format(self.trial_ends_date)
-            pass
+            # TODO: complete function with email sending
 
     def send_paid_ends_reminder(self):
-        if self.paid_days_left.days == any(range(1, 4)):
-            message = "Ваш оплаченный период заканчивается {}. Пожалуйста, пополните счёт".format(self.trial_ends_date)
-            pass
+        if self.paid_days_left.days in range(1,4):
+            message = "Ваш оплаченный период заканчивается {}. Пожалуйста, пополните счёт".format(self.paid_ends_date)
+            # TODO: complete function with email sending
 
     def count_trial_days_left(self):
         if self.trial_days_left.days <= 0:
