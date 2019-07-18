@@ -28,7 +28,7 @@ def special_thursdays(year: int) -> list:
     # starting from 15st day (1st day of 3th week)
     for month in months:
         for day in range(15, 23):
-            current_date = datetime.date(int(year), month, day)
+            current_date = datetime.date(year, month, day)
             if current_date.weekday() == 3:
                 days_list.append(current_date)
                 break
@@ -41,7 +41,7 @@ def special_thursdays_alternative(year: int, months=[3, 6, 9, 12], week=3, weekd
 
     for month in months:
         for day in range(min_day, min_day + 8):
-            current_date = datetime.date(int(year), month, day)
+            current_date = datetime.date(year, month, day)
             if current_date.weekday() == weekday:
                 days_list.append(current_date)
                 break
